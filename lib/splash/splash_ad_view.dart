@@ -47,9 +47,11 @@ class _SplashAdViewState extends State<SplashAdView> {
       return Container();
     }
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+      return LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Container(
+        width: constraints.maxWidth,
+        height: constraints.maxHeight,
         child: AndroidView(
           viewType: _viewType,
           creationParams: {
@@ -59,11 +61,13 @@ class _SplashAdViewState extends State<SplashAdView> {
           onPlatformViewCreated: _registerChannel,
           creationParamsCodec: const StandardMessageCodec(),
         ),
-      );
+      );});
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+      return LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Container(
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
         child: UiKitView(
           viewType: _viewType,
           creationParams: {
@@ -73,7 +77,7 @@ class _SplashAdViewState extends State<SplashAdView> {
           onPlatformViewCreated: _registerChannel,
           creationParamsCodec: const StandardMessageCodec(),
         ),
-      );
+      );});
     } else {
       return Container();
     }
